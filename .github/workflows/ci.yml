@@ -13,12 +13,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
 
-      - run: npm install
+      # IMPORTANT FIX
+      - run: npm install --include=dev
 
       - run: npx htmlhint "src/*.html"
 
       - run: npx stylelint "styles/style.css"
 
-      - run: npx parcel build src/index.html --dist-dir dist --no-cache
+      # REAL FIX HERE
+      - run: npx parcel build src/index.html --dist-dir dist --no-cache --log-level verbose
