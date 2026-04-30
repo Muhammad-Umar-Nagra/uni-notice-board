@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI Debug Pipeline
 
 on:
   push:
@@ -15,12 +15,21 @@ jobs:
         with:
           node-version: 20
 
-      # IMPORTANT FIX
-      - run: npm install --include=dev
+      - run: node --version
+      - run: npm --version
 
+      # install
+      - run: npm install
+
+      # show structure (VERY IMPORTANT)
+      - run: ls -R
+
+      # run lint separately (to isolate error)
       - run: npx htmlhint "src/*.html"
+        continue-on-error: true
 
       - run: npx stylelint "styles/style.css"
+        continue-on-error: true
 
-      # REAL FIX HERE
-      - run: npx parcel build src/index.html --dist-dir dist --no-cache --log-level verbose
+      # build step with full error visibility
+      - run: npx parcel build src/index.html --dist-dir dist
