@@ -1,2 +1,2 @@
 # uni-notice-board
-University Digital Notice Board - DevOps Assignment
+University Digital Notice Board - Dev Ops Assignment
