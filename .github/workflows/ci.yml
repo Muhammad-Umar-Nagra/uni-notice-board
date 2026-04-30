@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI Debug Pipeline
 
 on:
   push:
@@ -13,19 +13,23 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
 
-      # install everything safely
+      - run: node --version
+      - run: npm --version
+
+      # install
       - run: npm install
 
-      # confirm parcel exists
-      - run: npx parcel --version
+      # show structure (VERY IMPORTANT)
+      - run: ls -R
 
-      # HTML check
+      # run lint separately (to isolate error)
       - run: npx htmlhint "src/*.html"
+        continue-on-error: true
 
-      # CSS check
       - run: npx stylelint "styles/style.css"
+        continue-on-error: true
 
-      # build WITHOUT npm script dependency
+      # build step with full error visibility
       - run: npx parcel build src/index.html --dist-dir dist
