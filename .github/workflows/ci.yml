@@ -15,15 +15,17 @@ jobs:
         with:
           node-version: 20
 
-      # clean install (important)
-      - run: npm ci
+      # install everything safely
+      - run: npm install
 
-      # verify install
+      # confirm parcel exists
       - run: npx parcel --version
 
-      # lint
+      # HTML check
       - run: npx htmlhint "src/*.html"
+
+      # CSS check
       - run: npx stylelint "styles/style.css"
 
-      # build (most stable way)
+      # build WITHOUT npm script dependency
       - run: npx parcel build src/index.html --dist-dir dist
