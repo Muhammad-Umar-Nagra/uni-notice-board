@@ -15,15 +15,15 @@ jobs:
         with:
           node-version: 20
 
-      # Install dependencies FIRST (very important)
-      - run: npm install
+      # clean install (important)
+      - run: npm ci
 
-      # Debug step (helps if build fails)
-      - run: npm list parcel
+      # verify install
+      - run: npx parcel --version
 
-      # Lint checks
+      # lint
       - run: npx htmlhint "src/*.html"
       - run: npx stylelint "styles/style.css"
 
-      # Build step
+      # build (most stable way)
       - run: npx parcel build src/index.html --dist-dir dist
